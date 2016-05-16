@@ -24,8 +24,15 @@ submission <- melt(predictions,
                    variable.name = "FeatureName",
                    value.name = "Location")
 
+rm(image_test, image_training, test_set, training_set)
+gc()
 
 # Saving it to csv.
 
 names <- colnames(lookup_table)
 lookup_table$Location <- NULL
+
+final_sub <- merge(x = lookup_table,
+                   y = submission,
+                   all.x = TRUE,
+                   sort = FALSE)
