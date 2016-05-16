@@ -13,7 +13,12 @@ if(!file.exists("./data/test.csv")){
 
 
 # Dependencies.
+library(doSNOW)
 library(foreach)
+
+# Setting the amount of cores for parallel processing.
+cl <- makeCluster(4) # Change to amount of cores to be used.
+registerDoSNOW(cl)
 
 
 # Seperating the image column from the training dataframe for readability.
@@ -22,15 +27,17 @@ training_set$Image <- NULL
 
 
 # Parallel converting strings to integers by splitting them and converting the result to integer.
-image_training <- foreach(im = image_training, .combine=rbind) %do% {
+image_training <- foreach(im = image_training, .combine=rbind) %dopar% {
     as.integer(unlist(strsplit(im, " ")))
 }
 
 # Same for test set.
-image_test <- foreach(im = test_set$Image, .combine = rbind) %do% {
+image_test <- foreach(im = test_set$Image, .combine = rbind) %dopar% {
     as.integer(unlist(strsplit(im, " ")))
 }
 test_set$Image <- NULL
+
+stopCluster(cl)
 
 # Saving the objects for future use.
 rm(im)
