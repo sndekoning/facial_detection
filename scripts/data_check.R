@@ -1,6 +1,6 @@
 # === Data Check & Transformations ===
 
-#Checking if data is present.
+# Checking if data is present.
 if(!file.exists("./data/test.csv")){
     print("No data present, Please retrieve data from https://www.kaggle.com/c/facial-keypoints-detection/data")
 }else{
@@ -37,7 +37,7 @@ image_test <- foreach(im = test_set$Image, .combine = rbind) %dopar% {
 }
 test_set$Image <- NULL
 
-stopCluster(cl)
+stopCluster(cl) #shutting down de clusters
 
 # Saving the objects for future use.
 rm(im)

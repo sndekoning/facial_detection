@@ -1,3 +1,12 @@
+# Checking if data is present.
+if(!file.exists("./data/data.RData")){
+    print("No data present, preparing data-set")
+    source("data_check.R")
+}else{
+    print("Reading in data")
+    load("./data/data.RData")
+}
+
 load("./data/data.RData")
 
 # Visualizing the first image.

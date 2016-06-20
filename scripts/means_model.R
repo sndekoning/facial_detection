@@ -1,4 +1,11 @@
-load("./data/data.RData")
+# Checking if data is present.
+if(!file.exists("./data/data.RData")){
+    print("No data present, preparing data-set")
+    source("data_check.R")
+}else{
+    print("Reading in data")
+    load("./data/data.RData")
+}
 
 # Dependencies.
 
@@ -36,3 +43,5 @@ final_sub <- merge(x = lookup_table,
                    y = submission,
                    all.x = TRUE,
                    sort = FALSE)
+
+write.csv(final_sub, file = "final_sub.csv", quote = FALSE, row.names = FALSE)
